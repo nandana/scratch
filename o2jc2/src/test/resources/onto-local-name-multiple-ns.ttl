@@ -1,0 +1,31 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex1: <http://example.org/vocab/1> .
+@prefix ex2: <http://example.org/vocab/2> .
+@prefix ex2: <http://example.org/vocab/3> .
+
+<http://example.org/vocab/ontology#>  a owl:Ontology ;
+  dc:title "A vocabulary with local names defined in multiple namespaces" .
+
+ex1:proA a rdf:Property, owl:DatatypeProperty ;
+  rdfs:label "propA" ;
+  rdfs:comment "A test data type property" .
+
+ex2:proA a rdf:Property, owl:DatatypeProperty ;
+  rdfs:label "propA" ;
+  rdfs:comment "A test data type property" .
+
+ex3:proA a rdf:Property, owl:DatatypeProperty ;
+  rdfs:label "propA" ;
+  rdfs:comment "A test data type property" .
+
+ex1:ClassA a owl:Class, rdfs:Class ;
+  rdfs:label "Class A" .
+
+ex2:ClassA a owl:Class, rdfs:Class ;
+  rdfs:label "Class A" .
+
+ex3:ClassA a owl:Class, rdfs:Class ;
+  rdfs:label "Class A" .

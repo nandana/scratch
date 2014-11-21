@@ -1,0 +1,82 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>OWL 2 JSON-LD Context generator</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	  <![endif]-->
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">JSON-LD Context Generator</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h2>JSON-LD Context Generator</h2>
+        <p>A simple online tool that converts ontologies in to JSON-LD contexts that makes it easier to use those terms inside JSON-LD documents.</p>
+        <button type="button" class="btn btn-primary">Show me an example &raquo;</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Generate a JSON-LD Context</h4>
+          <p>Upload your ontology in RDF/XML or Turtle to generate a JSON-LD context.</p>
+          	<form action="upload" method="post" enctype="multipart/form-data">
+				OWL File: <input type="file" name="file" size="50" /> <br/>
+				RDF Format: &nbsp;&nbsp;
+				<select id="format" name="format">
+					<option value="TURTLE" selected="selected">TURTLE</option>
+					<option value="RDF/XML">RDF/XML</option>
+				</select> <br/><br/>
+				<input type="submit" value="Submit" class="btn btn-success" />
+			</form>
+
+        </div>
+        <div class="col-md-6">
+          <h4>Search existing JSON-LD contexts</h4>
+          <p> Look for a suitable JSON-LD context using a namespace, a class/property name, or a common prefix ... </p>
+          <p><a href="#" role="button" class="btn btn-warning">Later ... </a></p>
+       </div>
+      </div>
+      
+      <hr>
+
+      <footer>
+        <p>&copy; Ontology Engineering Group, Universidad Politécnica de Madrid 2014</p>
+      </footer>
+    </div> <!-- /container -->
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

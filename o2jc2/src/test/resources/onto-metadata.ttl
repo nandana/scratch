@@ -1,0 +1,28 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/vocab/terms#> .
+
+<http://example.org/vocab/terms#> a owl:Ontology ;
+  dc:title "My Ontology" ;
+  dc:description "Simple vocabulary with some metadata";
+  rdfs:label "My Ontology"@en ;
+  rdfs:seeAlso <http://example.org/vocab/ontology.html> ;
+  rdfs:seeAlso "_:blanknode" .
+
+ex:propA a rdf:Property, owl:DatatypeProperty ;
+  rdfs:label "propA" ;
+  rdfs:comment "A test data type property" .
+
+ex:propB a rdf:Property, owl:ObjectProperty ;
+    rdfs:domain ex:Entity ;
+    rdfs:range ex:Person ;
+    rdfs:comment "A test object property" .
+
+ex:Entity a owl:Class  .
+
+ex:Person a owl:Class  .
+
+
+

@@ -1,0 +1,36 @@
+{
+    "@context": {
+        "ex": "http://example.org/vocab/terms#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "propB": {
+            "@id": "ex:propB",
+            "@type": "@id"
+        },
+        "propA": {
+            "@id": "ex:propA"
+        },
+        "Person": "ex:Person",
+        "Entity": "ex:Entity",
+        "seeAlso": "rdfs:seeAlso",
+        "label": "rdfs:label",
+        "description": "dc:description",
+        "title": "dc:title",
+        "type": "rdf:type"
+    },
+    "@id": "http://example.org/vocab/terms#",
+    "@type": "owl:Ontology",
+    "seeAlso": {
+        "@id": "http://example.org/vocab/ontology.html",
+        "@type": "@id"
+    },
+    "label": "My Ontology",
+    "description": "Simple vocabulary with some metadata",
+    "title": "My Ontology",
+    "type": {
+        "@id": "http://www.w3.org/2002/07/owl#Ontology",
+        "@type": "@id"
+    }
+}
