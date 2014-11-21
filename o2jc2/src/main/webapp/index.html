@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>OWL 2 JSON-LD Context generator</title>
+	<title>O2JL - Ontology 2 JSON-LD Context generator</title>
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -26,7 +26,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">JSON-LD Context Generator</a>
+          <a class="navbar-brand" href="#">O2JL - Ontology 2 JSON-LD Context generator</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           
@@ -48,17 +48,55 @@
       <div class="row">
         <div class="col-md-6">
           <h4>Generate a JSON-LD Context</h4>
-          <p>Upload your ontology in RDF/XML or Turtle to generate a JSON-LD context.</p>
-          	<form action="upload" method="post" enctype="multipart/form-data">
-				OWL File: <input type="file" name="file" size="50" /> <br/>
-				RDF Format: &nbsp;&nbsp;
-				<select id="format" name="format">
-					<option value="TURTLE" selected="selected">TURTLE</option>
-					<option value="RDF/XML">RDF/XML</option>
-				</select> <br/><br/>
-				<input type="submit" value="Submit" class="btn btn-success" />
-			</form>
-
+            <p>Upload, provide the URL, or paste your ontology to generate a JSON-LD context.</p>
+            <div class="container">
+                <div id="content">
+                    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                        <li class="active"><a href="#red" data-toggle="tab">File upload</a></li>
+                        <li><a href="#orange" data-toggle="tab">URL</a></li>
+                        <li><a href="#green" data-toggle="tab">Text</a></li>
+                    </ul>
+                    <div id="my-tab-content" class="tab-content">
+                        <div class="tab-pane active" id="red">
+                            <form action="generate" method="post" enctype="multipart/form-data">
+                                OWL File: <input type="file" name="file" size="50" /> <br/>
+                                RDF Format: &nbsp;&nbsp;
+                                <select id="format" name="format">
+                                    <option value="TURTLE" selected="selected">TURTLE</option>
+                                    <option value="RDF/XML">RDF/XML</option>
+                                </select> <br/><br/>
+                                <input type="submit" value="Upload" class="btn btn-success" />
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="orange">
+                            <form action="url" method="post">
+                                <br/>
+                                Ontology URI: <input type="text" id="url" name="url" size="40" /> <br/><br/>
+                                RDF Format: &nbsp;&nbsp;
+                                <select id="format" name="format">
+                                    <option value="TURTLE" selected="selected">TURTLE</option>
+                                    <option value="RDF/XML">RDF/XML</option>
+                                </select> <br/><br/>
+                                <input type="submit" value="Upload" class="btn btn-success" />
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="green">
+                            <form action="url" method="post">
+                                Ontology Content: <br/>
+                                <textarea name="content" rows="10" cols="50">
+                                </textarea>
+                                <br/>
+                                RDF Format: &nbsp;&nbsp;
+                                <select id="format" name="format">
+                                    <option value="TURTLE" selected="selected">TURTLE</option>
+                                    <option value="RDF/XML">RDF/XML</option>
+                                </select> <br/><br/>
+                                <input type="submit" value="Upload" class="btn btn-success" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
           <h4>Search existing JSON-LD contexts</h4>
@@ -73,8 +111,8 @@
         <p>&copy; Ontology Engineering Group, Universidad Politécnica de Madrid 2014</p>
       </footer>
     </div> <!-- /container -->
-	
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>

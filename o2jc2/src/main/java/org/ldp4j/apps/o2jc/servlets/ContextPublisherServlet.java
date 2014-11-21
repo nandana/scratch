@@ -14,9 +14,11 @@
  * limitations under the License
  */
 
-package org.ldp4j.apps.o2jc;
+package org.ldp4j.apps.o2jc.servlets;
 
 import com.mongodb.DBObject;
+import org.ldp4j.apps.o2jc.listeners.ConfigManager;
+import org.ldp4j.apps.o2jc.persistence.MongoDBClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +44,8 @@ public class ContextPublisherServlet extends HttpServlet {
             path = path.substring(1, path.length());
         }
 
-        MongoDBClient dbClient = new MongoDBClient();
+        ConfigManager.DBCredentials credentials = ConfigManager.getDBCredentials();
+        MongoDBClient dbClient = new MongoDBClient(credentials.getUsername(), credentials.getPassword());
         DBObject dbObject = dbClient.find(path);
 
         if (dbObject != null) {

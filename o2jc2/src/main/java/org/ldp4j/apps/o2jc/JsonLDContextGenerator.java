@@ -21,20 +21,22 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import com.hp.hpl.jena.vocabulary.DCTerms;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
 import com.mongodb.BasicDBObject;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class JsonLDContextGenerator {
-
-	private File owlFile;
-
-	private String format;
 
 	// Counter for generating namespace prefixes
 	private int nsCounter = 0;
@@ -44,15 +46,7 @@ public class JsonLDContextGenerator {
 
 	BiMap<String, String> terms = HashBiMap.create();
 
-	public JsonLDContextGenerator(File owlFile, String format) {
-		this.owlFile = owlFile;
-		this.format = format;
-	}
-
-	public BasicDBObject process() throws IOException {
-
-		OntModel base = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
-		base.read(new FileInputStream(owlFile), null, format);
+	public BasicDBObject process(OntModel base)  {
 
 		BasicDBObject root = new BasicDBObject();
 
@@ -67,7 +61,7 @@ public class JsonLDContextGenerator {
 		return root;
 	}
 
-	protected BasicDBObject generateContext(OntModel base)  throws IOException {
+	protected BasicDBObject generateContext(OntModel base)   {
 
         nsMap = base.getNsPrefixMap();
 
@@ -158,7 +152,6 @@ public class JsonLDContextGenerator {
 
 		//These can't be null because we declare them in the start if not present
 		String owlPrefix = nsInverseMap.get(OWL.getURI());
-		String rdfsPrefix = nsInverseMap.get(RDFS.getURI());
 
 		Model model = base.getBaseModel();
 

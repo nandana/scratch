@@ -14,26 +14,23 @@
  * limitations under the License
  */
 
-package org.ldp4j.apps.o2jc;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package org.ldp4j.apps.o2jc.servlets;
 
 import com.mongodb.BasicDBObject;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.jena.riot.RiotException;
+import org.ldp4j.apps.o2jc.O2JCAppException;
 
-public class OntologyUploaderServlet extends HttpServlet {
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+
+public class OntologyUploaderServlet extends GenericUploaderServlet  {
 
     private static final long serialVersionUID = 1L;
  
@@ -48,12 +45,24 @@ public class OntologyUploaderServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+
         // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
-            // if not, we stop here
-            PrintWriter writer = response.getWriter();
-            writer.println("Error: Form must has enctype=multipart/form-data.");
-            writer.flush();
+            // if not, send an error message
+            sendErrorMessage(request, response, "The request must be enctype=multipart/form-data.");
+            return;
+        }
+
+        //Check whether we can generate the context URI
+        String servletName = "generate";
+        String servletURL = request.getRequestURL().toString();
+        String baseURL;
+
+        if (servletURL.endsWith(servletName)) {
+            baseURL = servletURL.substring(0, (servletURL.length() - servletName.length()));
+        } else {
+            sendErrorMessage(request, response, "Error occurred while generating the context URL from the servlet " +
+                    "URL " + servletURL);
             return;
         }
  
@@ -110,44 +119,30 @@ public class OntologyUploaderServlet extends HttpServlet {
                     }
                 }
                 
-                if(storeFile == null || format == null) {
-                    PrintWriter writer = response.getWriter();
-                    writer.println("An error occured. Please try again later ...");
-                    writer.flush();
+                if(storeFile == null) {
+                    sendErrorMessage(request, response, "Error occurred while uploading the file ...");
                     return;
-                }
-                                
-                JsonLDContextGenerator generator = new JsonLDContextGenerator(storeFile, format);
-                
-                BasicDBObject jsonLDContext = null;
-                try {
-                	jsonLDContext = generator.process();
-                } catch (RiotException ex){
-                    PrintWriter writer = response.getWriter();
-                    writer.println("An error occured. Please check your inputs ...");
-                    writer.println(ex.getMessage());
-                    writer.flush();
+                } else if (format == null) {
+                    sendErrorMessage(request, response, "Format parameter is not specified ...");
                     return;
                 }
 
-                MongoDBClient dbClient = new MongoDBClient();
-                String id = dbClient.persist(jsonLDContext);
+                BasicDBObject basicDBObject = generateJsonLDContext(new FileInputStream(storeFile), format);
 
                 if (fileItem != null) {
-                	fileItem.delete();
+                    fileItem.delete();
                 }
 
-                System.out.println("ID:" + id);
+                String id = persist(basicDBObject);
+                request.setAttribute("contextURL", baseURL +"contexts/" + id);
 
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("message.jsp");
-
-                request.setAttribute("jsonLDContext", jsonLDContext.toString());
-                request.setAttribute("id", id);
+                redirect(request, response, basicDBObject);
 
             }
             
         } catch (Exception ex) {
-        	System.err.println(ex);
+            throw new O2JCAppException("Error processing the request ...", ex);
         }
     }
+
 }

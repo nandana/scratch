@@ -16,6 +16,8 @@
 
 package org.ldp4j.apps.o2jc;
 
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
@@ -49,8 +52,11 @@ public class JsonLDContextGeneratorTest {
         URL url = this.getClass().getClassLoader().getResource("onto-metadata.ttl");
         File owlFile = new File(url.toURI());
 
-        JsonLDContextGenerator contextGenerator = new JsonLDContextGenerator(owlFile, "TURTLE");
-        BasicDBObject jsonLDContext = contextGenerator.process();
+        OntModel base = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+        base.read(new FileInputStream(owlFile), null, "TURTLE");
+
+        JsonLDContextGenerator contextGenerator = new JsonLDContextGenerator();
+        BasicDBObject jsonLDContext = contextGenerator.process(base);
 
         String contextString = jsonLDContext.toString();
 
@@ -97,8 +103,11 @@ public class JsonLDContextGeneratorTest {
         URL url = this.getClass().getClassLoader().getResource("onto-without-metadata.ttl");
         File owlFile = new File(url.toURI());
 
-        JsonLDContextGenerator contextGenerator = new JsonLDContextGenerator(owlFile, "TURTLE");
-        BasicDBObject jsonLDContext = contextGenerator.process();
+        OntModel base = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+        base.read(new FileInputStream(owlFile), null, "TURTLE");
+
+        JsonLDContextGenerator contextGenerator = new JsonLDContextGenerator();
+        BasicDBObject jsonLDContext = contextGenerator.process(base);
 
         String contextString = jsonLDContext.toString();
 

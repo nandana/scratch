@@ -13,23 +13,37 @@
 	
 	<servlet>
    		<servlet-name>FileUploaderServlet</servlet-name>
-   		<servlet-class>org.ldp4j.apps.o2jc.OntologyUploaderServlet</servlet-class>
+   		<servlet-class>org.ldp4j.apps.o2jc.servlets.OntologyUploaderServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
    		<servlet-name>FileUploaderServlet</servlet-name>
-   		<url-pattern>/upload</url-pattern>
+   		<url-pattern>/generate</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>URLUploaderServlet</servlet-name>
+		<servlet-class>org.ldp4j.apps.o2jc.servlets.URLContentUploaderServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>URLUploaderServlet</servlet-name>
+		<url-pattern>/url</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>ContextPublisherServlet</servlet-name>
-		<servlet-class>org.ldp4j.apps.o2jc.ContextPublisherServlet</servlet-class>
+		<servlet-class>org.ldp4j.apps.o2jc.servlets.ContextPublisherServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>ContextPublisherServlet</servlet-name>
 		<url-pattern>/contexts/*</url-pattern>
 	</servlet-mapping>
+
+	<listener>
+		<listener-class>org.ldp4j.apps.o2jc.listeners.ConfigManager</listener-class>
+	</listener>
 	
 
 </web-app>

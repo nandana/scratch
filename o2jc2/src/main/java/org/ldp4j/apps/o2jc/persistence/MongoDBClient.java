@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package org.ldp4j.apps.o2jc;
+package org.ldp4j.apps.o2jc.persistence;
 
 
 import com.mongodb.*;
@@ -31,33 +31,35 @@ public class MongoDBClient {
     private String username;
     private String password;
 
-    public MongoDBClient() throws IOException {
+    public static final String DB_CONNECTION_URI = "mongodb://%s:%s@ds055680.mongolab.com:55680/test";
 
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("config.properties");
-        Properties properties = new Properties();
-        properties.load(is);
+    public static final String DB_COLLECTION = "contexts";
 
-        username = properties.getProperty("username");
-        password = properties.getProperty("password");
+    public static final String ID = "_id";
+
+    public MongoDBClient(String username, String password) throws IOException {
 
         if (username == null || password == null) {
             throw new IllegalStateException("Username or/and password are null");
         }
 
+        this.username = username;
+        this.password = password;
+
     }
 
     public String persist(BasicDBObject dbObject) throws UnknownHostException {
 
-        String uriString = String.format("mongodb://%s:%s@ds055680.mongolab.com:55680/test", username, password);
+        String uriString = String.format(DB_CONNECTION_URI, username, password);
 
         MongoClientURI uri  = new MongoClientURI(uriString);
         MongoClient client = new MongoClient(uri);
         DB db = client.getDB(uri.getDatabase());
 
-        DBCollection contexts = db.getCollection("contexts");
+        DBCollection contexts = db.getCollection(DB_COLLECTION);
 
         String id = UUID.randomUUID().toString();
-        dbObject.put("_id", id);
+        dbObject.put(ID, id);
 
         contexts.insert(dbObject);
 
@@ -69,24 +71,24 @@ public class MongoDBClient {
 
     public DBObject find (String id) throws UnknownHostException {
 
-        String uriString = String.format("mongodb://%s:%s@ds055680.mongolab.com:55680/test", username, password);
+        String uriString = String.format(DB_CONNECTION_URI, username, password);
 
         MongoClientURI uri  = new MongoClientURI(uriString);
         MongoClient client = new MongoClient(uri);
         DB db = client.getDB(uri.getDatabase());
 
 
-        DBCollection coll = db.getCollection("contexts");
+        DBCollection coll = db.getCollection(DB_COLLECTION);
 
         BasicDBObject query = new BasicDBObject();
-        query.put("_id", id);
+        query.put(ID, id);
 
         DBCursor cursor  = coll.find(query);
 
         try {
             if (cursor.hasNext()) {
                 DBObject dbObject = cursor.next();
-                dbObject.removeField("_id");
+                dbObject.removeField(ID);
                 return dbObject;
             } else {
                 return null;
