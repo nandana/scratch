@@ -22,6 +22,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.jena.riot.RiotException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +56,7 @@ public class URLContentUploaderServlet extends GenericUploaderServlet  {
             return;
         }
 
-        String url = request.getParameter("urls");
+        String url = request.getParameter("url");
         String content = request.getParameter("content");
         String format = request.getParameter("format");
 
@@ -95,14 +96,23 @@ public class URLContentUploaderServlet extends GenericUploaderServlet  {
 
             HttpResponse res = client.execute(get);
 
-            if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK ) {
+            if(res.getStatusLine().getStatusCode() != HttpStatus.SC_OK ) {
                 sendErrorMessage(request, response, String.format("Error retrieving the ontology '%s' : '%s' '%s'",
                         url, res.getStatusLine().getStatusCode(), res.getStatusLine().getReasonPhrase()));
+                return;
             } else if (res.getEntity() == null) {
                 sendErrorMessage(request, response, String.format("The ontology '%s' sent an empty response.", url));
+                return;
             }
 
-            basicDBObject = generateJsonLDContext(res.getEntity().getContent(), format);
+            try {
+                basicDBObject = generateJsonLDContext(res.getEntity().getContent(), format);
+            } catch (RiotException ex) {
+                sendErrorMessage(request, response, String.format("Error unmarshalling the ontology '%s' as '%s' ",
+                        url, ex.getMessage()));
+                return;
+            }
+
         }
 
         String id = persist(basicDBObject);
