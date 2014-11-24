@@ -19,10 +19,13 @@ package org.ldp4j.apps.o2jc.persistence;
 
 import com.mongodb.*;
 import org.bson.types.ObjectId;
+import org.ldp4j.apps.o2jc.Vocab;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -69,7 +72,7 @@ public class MongoDBClient {
 
     }
 
-    public DBObject find (String id) throws UnknownHostException {
+    public DBObject findByID(String id) throws UnknownHostException {
 
         String uriString = String.format(DB_CONNECTION_URI, username, password);
 
@@ -96,6 +99,37 @@ public class MongoDBClient {
         } finally {
             cursor.close();
         }
+    }
+
+    public List<DBObject> findByURI(String ontoUri) throws UnknownHostException {
+
+        String uriString = String.format(DB_CONNECTION_URI, username, password);
+
+        MongoClientURI uri  = new MongoClientURI(uriString);
+        MongoClient client = new MongoClient(uri);
+        DB db = client.getDB(uri.getDatabase());
+
+
+        DBCollection coll = db.getCollection(DB_COLLECTION);
+
+        BasicDBObject query = new BasicDBObject();
+        query.put(Vocab.ID, ontoUri);
+
+        DBCursor cursor  = coll.find(query);
+
+        List<DBObject> matches = new ArrayList<DBObject>();
+
+        try {
+            while (cursor.hasNext()) {
+                DBObject dbObject = cursor.next();
+                dbObject.removeField(ID);
+                matches.add(dbObject);
+            }
+            return  matches;
+        } finally {
+            cursor.close();
+        }
+
     }
 
 }

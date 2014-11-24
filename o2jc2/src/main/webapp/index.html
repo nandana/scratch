@@ -101,7 +101,9 @@
         <div class="col-md-6">
           <h4>Search existing JSON-LD contexts</h4>
           <p> Look for a suitable JSON-LD context using a namespace, a class/property name, or a common prefix ... </p>
-          <p><a href="#" role="button" class="btn btn-warning">Later ... </a></p>
+            Ontology URI: <input type="text" name="search" id="search" size="40" />
+            <div id="search-button" class="btn btn-warning">Get External Content</div>
+          <div id="results"></div>
        </div>
       </div>
       
@@ -116,5 +118,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#search-button").click(function(){
+                var values = {};
+                values['type'] = 'uri';
+                values['uri'] = $("#search").val();
+                $.ajax({url:"search", type: 'GET', data: values , success:function(result){
+                    $("#results").html(result);
+                }});
+            });
+        });
+    </script>
 </body>
 </html>

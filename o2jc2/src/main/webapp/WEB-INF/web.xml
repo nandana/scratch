@@ -41,6 +41,16 @@
 		<url-pattern>/contexts/*</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ContextSearchServlet</servlet-name>
+		<servlet-class>org.ldp4j.apps.o2jc.servlets.ContextSearchServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ContextSearchServlet</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
+
 	<listener>
 		<listener-class>org.ldp4j.apps.o2jc.listeners.ConfigManager</listener-class>
 	</listener>
