@@ -18,15 +18,12 @@ package org.ldp4j.apps.o2jc.persistence;
 
 
 import com.mongodb.*;
-import org.bson.types.ObjectId;
 import org.ldp4j.apps.o2jc.Vocab;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.UUID;
 
 public class MongoDBClient {
@@ -131,5 +128,35 @@ public class MongoDBClient {
         }
 
     }
+
+    public List<DBObject> findByKey(String key) throws UnknownHostException {
+
+        String uriString = String.format(DB_CONNECTION_URI, username, password);
+
+        MongoClientURI uri  = new MongoClientURI(uriString);
+        MongoClient client = new MongoClient(uri);
+        DB db = client.getDB(uri.getDatabase());
+
+        DBCollection coll = db.getCollection(DB_COLLECTION);
+
+        DBObject query = new BasicDBObject(key, new BasicDBObject("$exists", true));
+
+        DBCursor cursor  = coll.find(query);
+
+        List<DBObject> matches = new ArrayList<DBObject>();
+
+        try {
+            while (cursor.hasNext()) {
+                DBObject dbObject = cursor.next();
+                dbObject.removeField(ID);
+                matches.add(dbObject);
+            }
+            return  matches;
+        } finally {
+            cursor.close();
+        }
+
+    }
+
 
 }

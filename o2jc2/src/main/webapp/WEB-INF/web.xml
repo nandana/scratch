@@ -54,6 +54,10 @@
 	<listener>
 		<listener-class>org.ldp4j.apps.o2jc.listeners.ConfigManager</listener-class>
 	</listener>
+
+	<listener>
+		<listener-class>org.ldp4j.apps.o2jc.listeners.RequestListener</listener-class>
+	</listener>
 	
 
 </web-app>

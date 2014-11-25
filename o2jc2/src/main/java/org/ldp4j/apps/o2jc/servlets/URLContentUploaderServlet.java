@@ -23,6 +23,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.jena.riot.RiotException;
+import org.ldp4j.apps.o2jc.util.O2JCUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,20 +42,6 @@ public class URLContentUploaderServlet extends GenericUploaderServlet  {
                           HttpServletResponse response) throws ServletException, IOException {
 
         logger.debug("Started processing the request ...");
-
-        //Check whether we can generate the context URI
-        String servletName = "url";
-        String servletURL = request.getRequestURL().toString();
-        String baseURL;
-
-        if (servletURL.endsWith(servletName)) {
-            baseURL = servletURL.substring(0, (servletURL.length() - servletName.length()));
-            logger.debug("Base URL is '{}'", baseURL);
-        } else {
-            sendErrorMessage(request, response, "Error occurred while generating the context URL from the servlet " +
-                    "URL " + servletURL);
-            return;
-        }
 
         String url = request.getParameter("url");
         String content = request.getParameter("content");
@@ -116,7 +103,7 @@ public class URLContentUploaderServlet extends GenericUploaderServlet  {
         }
 
         String id = persist(basicDBObject);
-        request.setAttribute("contextURL", baseURL +"contexts/" + id);
+        request.setAttribute("contextURL", O2JCUtil.convertToContextURL(id));
 
         redirect(request, response, basicDBObject);
 

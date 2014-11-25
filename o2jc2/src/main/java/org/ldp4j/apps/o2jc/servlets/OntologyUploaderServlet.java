@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.ldp4j.apps.o2jc.O2JCAppException;
+import org.ldp4j.apps.o2jc.util.O2JCUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -50,19 +51,6 @@ public class OntologyUploaderServlet extends GenericUploaderServlet  {
         if (!ServletFileUpload.isMultipartContent(request)) {
             // if not, send an error message
             sendErrorMessage(request, response, "The request must be enctype=multipart/form-data.");
-            return;
-        }
-
-        //Check whether we can generate the context URI
-        String servletName = "generate";
-        String servletURL = request.getRequestURL().toString();
-        String baseURL;
-
-        if (servletURL.endsWith(servletName)) {
-            baseURL = servletURL.substring(0, (servletURL.length() - servletName.length()));
-        } else {
-            sendErrorMessage(request, response, "Error occurred while generating the context URL from the servlet " +
-                    "URL " + servletURL);
             return;
         }
  
@@ -134,7 +122,7 @@ public class OntologyUploaderServlet extends GenericUploaderServlet  {
                 }
 
                 String id = persist(basicDBObject);
-                request.setAttribute("contextURL", baseURL +"contexts/" + id);
+                request.setAttribute("contextURL", O2JCUtil.convertToContextURL(id));
 
                 redirect(request, response, basicDBObject);
 

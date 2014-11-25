@@ -32,6 +32,8 @@ public class ConfigManager implements ServletContextListener {
 
     private static DBCredentials dbCredentials;
 
+    private static String baseURL;
+
     public static final String CONFIG_FILE = "config.properties";
 
     @Override
@@ -65,6 +67,24 @@ public class ConfigManager implements ServletContextListener {
 
     public static DBCredentials getDBCredentials(){
         return dbCredentials;
+    }
+
+    public static  void setBaseURL(String url){
+        baseURL = url;
+    }
+
+    /***
+     * Returns the base URL of the application. The method can return null when the base URL is not set and
+     * the secure flag is set to false.
+     * @param secure a flag to say throw an error if the base URL is not known.
+     * @return base URL of the application.
+     * @throws java.lang.IllegalStateException if called with secure when base URL is null
+     */
+    public static String getBaseURL(boolean secure){
+        if(secure && baseURL == null){
+            throw new IllegalStateException("Base URL is not defined ...");
+        }
+        return baseURL;
     }
 
     public class DBCredentials {
