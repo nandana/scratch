@@ -7,6 +7,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+    <!-- Bootstrap validator -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,7 +52,7 @@
         <div class="col-md-6">
           <h4>Generate a JSON-LD Context</h4>
             <p>Upload, provide the URL, or paste your ontology to generate a JSON-LD context.</p>
-            <div class="container">
+            <div>
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
                         <li class="active"><a href="#red" data-toggle="tab">File upload</a></li>
@@ -59,12 +62,25 @@
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="red">
                             <form action="generate" method="post" enctype="multipart/form-data">
-                                OWL File: <input type="file" name="file" size="50" /> <br/>
-                                RDF Format: &nbsp;&nbsp;
-                                <select id="format" name="format">
-                                    <option value="TURTLE" selected="selected">TURTLE</option>
-                                    <option value="RDF/XML">RDF/XML</option>
-                                </select> <br/><br/>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-sm-3 control-label">OWL File:</label>
+                                    <div class="col-sm-6">
+                                        <input type="file" name="file" size="50" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <label class="col-sm-3 control-label">RDF Format:</label>
+                                    <div class="col-sm-6">
+                                        <select id="format" name="format" class="form-control">
+                                            <option value="TURTLE" selected="selected">TURTLE</option>
+                                            <option value="RDF/XML">RDF/XML</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                </div>
                                 <input type="submit" value="Upload" class="btn btn-success" />
                             </form>
                         </div>
@@ -101,8 +117,27 @@
         <div class="col-md-6">
           <h4>Search existing JSON-LD contexts</h4>
           <p> Look for a suitable JSON-LD context using a namespace, a class/property name, or a common prefix ... </p>
-            Ontology URI: <input type="text" name="search" id="search" size="40" />
-            <div id="search-button" class="btn btn-warning">Get External Content</div>
+          <form id="uriForm" class="form-horizontal"
+                data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                <div class="row">
+                    <label class="col-sm-3 control-label">Ontology URI:</label>
+                    <div class="col-sm-6">
+                     <input type="text" name="searchuri" id="searchuri" size="40"
+                                         class="form-control" data-bv-uri="true" data-bv-uri-message="The ontology URI is not valid" />
+                    </div>
+                    <div id="uri-search" class="btn btn-success col-sm-3">Search</div>
+                    <br/><br/>
+                </div>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Property/Class (local) name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="searchkey" id="searchkey" size="40" class="form-control" />
+                    </div>
+                    <div id="key-search" class="btn btn-success col-sm-3">Search</div>
+                </div>
+          </form>
           <div id="results"></div>
        </div>
       </div>
@@ -110,7 +145,14 @@
       <hr>
 
       <footer>
-        <p>&copy; Ontology Engineering Group, Universidad Politécnica de Madrid 2014</p>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>&copy; Ontology Engineering Group, Universidad Politécnica de Madrid 2014</p>
+            </div>
+            <div class="col-sm-6">
+                <p>Powered By: <a href="http://ldp4j.org">LDP4j</a></p>
+            </div>
+        </div>
       </footer>
     </div> <!-- /container -->
 
@@ -118,17 +160,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap validator -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 
     <script>
         $(document).ready(function(){
-            $("#search-button").click(function(){
+            $("#uri-search").click(function(){
                 var values = {};
                 values['type'] = 'uri';
-                values['uri'] = $("#search").val();
+                values['uri'] = $("#searchuri").val();
                 $.ajax({url:"search", type: 'GET', data: values , success:function(result){
                     $("#results").html(result);
                 }});
             });
+            $("#key-search").click(function(){
+                var values = {};
+                values['type'] = 'key';
+                values['key'] = $("#searchkey").val();
+                $.ajax({url:"search", type: 'GET', data: values , success:function(result){
+                    $("#results").html(result);
+                }});
+            });
+            $('#uriForm').bootstrapValidator();
         });
     </script>
 </body>

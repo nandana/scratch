@@ -31,7 +31,7 @@ public class MongoDBClient {
     private String username;
     private String password;
 
-    public static final String DB_CONNECTION_URI = "mongodb://%s:%s@ds055680.mongolab.com:55680/test";
+    public static String dbConnectionURI = "mongodb://%s:%s@ds055680.mongolab.com:55680/test";
 
     public static final String DB_COLLECTION = "contexts";
 
@@ -48,9 +48,13 @@ public class MongoDBClient {
 
     }
 
+    public MongoDBClient(String uri) {
+        this.dbConnectionURI = uri;
+    }
+
     public String persist(BasicDBObject dbObject) throws UnknownHostException {
 
-        String uriString = String.format(DB_CONNECTION_URI, username, password);
+        String uriString = String.format(dbConnectionURI, username, password);
 
         MongoClientURI uri  = new MongoClientURI(uriString);
         MongoClient client = new MongoClient(uri);
@@ -71,7 +75,7 @@ public class MongoDBClient {
 
     public DBObject findByID(String id) throws UnknownHostException {
 
-        String uriString = String.format(DB_CONNECTION_URI, username, password);
+        String uriString = String.format(dbConnectionURI, username, password);
 
         MongoClientURI uri  = new MongoClientURI(uriString);
         MongoClient client = new MongoClient(uri);
@@ -88,7 +92,7 @@ public class MongoDBClient {
         try {
             if (cursor.hasNext()) {
                 DBObject dbObject = cursor.next();
-                dbObject.removeField(ID);
+                //dbObject.removeField(ID);
                 return dbObject;
             } else {
                 return null;
@@ -100,7 +104,7 @@ public class MongoDBClient {
 
     public List<DBObject> findByURI(String ontoUri) throws UnknownHostException {
 
-        String uriString = String.format(DB_CONNECTION_URI, username, password);
+        String uriString = String.format(dbConnectionURI, username, password);
 
         MongoClientURI uri  = new MongoClientURI(uriString);
         MongoClient client = new MongoClient(uri);
@@ -119,7 +123,7 @@ public class MongoDBClient {
         try {
             while (cursor.hasNext()) {
                 DBObject dbObject = cursor.next();
-                dbObject.removeField(ID);
+                //dbObject.removeField(ID);
                 matches.add(dbObject);
             }
             return  matches;
@@ -131,7 +135,7 @@ public class MongoDBClient {
 
     public List<DBObject> findByKey(String key) throws UnknownHostException {
 
-        String uriString = String.format(DB_CONNECTION_URI, username, password);
+        String uriString = String.format(dbConnectionURI, username, password);
 
         MongoClientURI uri  = new MongoClientURI(uriString);
         MongoClient client = new MongoClient(uri);
@@ -139,7 +143,8 @@ public class MongoDBClient {
 
         DBCollection coll = db.getCollection(DB_COLLECTION);
 
-        DBObject query = new BasicDBObject(key, new BasicDBObject("$exists", true));
+
+        DBObject query = new BasicDBObject("@context." + key, new BasicDBObject("$exists", true));
 
         DBCursor cursor  = coll.find(query);
 
@@ -148,7 +153,7 @@ public class MongoDBClient {
         try {
             while (cursor.hasNext()) {
                 DBObject dbObject = cursor.next();
-                dbObject.removeField(ID);
+                //dbObject.removeField(ID);
                 matches.add(dbObject);
             }
             return  matches;

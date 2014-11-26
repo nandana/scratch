@@ -47,6 +47,7 @@ public class ContextPublisherServlet extends HttpServlet {
         ConfigManager.DBCredentials credentials = ConfigManager.getDBCredentials();
         MongoDBClient dbClient = new MongoDBClient(credentials.getUsername(), credentials.getPassword());
         DBObject dbObject = dbClient.findByID(path);
+        dbObject.removeField("_id");
 
         if (dbObject != null) {
             PrintWriter writer = resp.getWriter();

@@ -1,0 +1,277 @@
+{
+  "@context": {
+    "schema": "http://schema.org/",
+    "dc": "http://purl.org/dc/terms/",
+    "wot": "http://xmlns.com/wot/0.1/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "ns0": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "dc11": "http://purl.org/dc/elements/1.1/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "fundedBy": {
+      "@id": "foaf:fundedBy",
+      "@type": "@id"
+    },
+    "term_status": {
+      "@id": "ns0:term_status"
+    },
+    "img": {
+      "@id": "foaf:img",
+      "@type": "@id"
+    },
+    "birthday": {
+      "@id": "foaf:birthday"
+    },
+    "givenName": {
+      "@id": "foaf:givenName"
+    },
+    "currentProject": {
+      "@id": "foaf:currentProject",
+      "@type": "@id"
+    },
+    "homepage": {
+      "@id": "foaf:homepage",
+      "@type": "@id"
+    },
+    "geekcode": {
+      "@id": "foaf:geekcode"
+    },
+    "knows": {
+      "@id": "foaf:knows",
+      "@type": "@id"
+    },
+    "mbox": {
+      "@id": "foaf:mbox",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "foaf:name"
+    },
+    "sha1": {
+      "@id": "foaf:sha1"
+    },
+    "date": {
+      "@id": "dc11:date"
+    },
+    "accountServiceHomepage": {
+      "@id": "foaf:accountServiceHomepage",
+      "@type": "@id"
+    },
+    "yahooChatID": {
+      "@id": "foaf:yahooChatID"
+    },
+    "primaryTopic": {
+      "@id": "foaf:primaryTopic",
+      "@type": "@id"
+    },
+    "icqChatID": {
+      "@id": "foaf:icqChatID"
+    },
+    "dnaChecksum": {
+      "@id": "foaf:dnaChecksum"
+    },
+    "thumbnail": {
+      "@id": "foaf:thumbnail",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "dc11:description"
+    },
+    "publications": {
+      "@id": "foaf:publications",
+      "@type": "@id"
+    },
+    "age": {
+      "@id": "foaf:age"
+    },
+    "assurance": {
+      "@id": "wot:assurance"
+    },
+    "holdsAccount": {
+      "@id": "foaf:holdsAccount",
+      "@type": "@id"
+    },
+    "theme": {
+      "@id": "foaf:theme",
+      "@type": "@id"
+    },
+    "accountName": {
+      "@id": "foaf:accountName"
+    },
+    "workInfoHomepage": {
+      "@id": "foaf:workInfoHomepage",
+      "@type": "@id"
+    },
+    "phone": {
+      "@id": "foaf:phone",
+      "@type": "@id"
+    },
+    "workplaceHomepage": {
+      "@id": "foaf:workplaceHomepage",
+      "@type": "@id"
+    },
+    "member": {
+      "@id": "foaf:member",
+      "@type": "@id"
+    },
+    "made": {
+      "@id": "foaf:made",
+      "@type": "@id"
+    },
+    "gender": {
+      "@id": "foaf:gender"
+    },
+    "surname": {
+      "@id": "foaf:surname"
+    },
+    "mbox_sha1sum": {
+      "@id": "foaf:mbox_sha1sum"
+    },
+    "topic_interest": {
+      "@id": "foaf:topic_interest",
+      "@type": "@id"
+    },
+    "lastName": {
+      "@id": "foaf:lastName"
+    },
+    "page": {
+      "@id": "foaf:page",
+      "@type": "@id"
+    },
+    "nick": {
+      "@id": "foaf:nick"
+    },
+    "interest": {
+      "@id": "foaf:interest",
+      "@type": "@id"
+    },
+    "based_near": {
+      "@id": "foaf:based_near",
+      "@type": "@id"
+    },
+    "schoolHomepage": {
+      "@id": "foaf:schoolHomepage",
+      "@type": "@id"
+    },
+    "logo": {
+      "@id": "foaf:logo",
+      "@type": "@id"
+    },
+    "aimChatID": {
+      "@id": "foaf:aimChatID"
+    },
+    "weblog": {
+      "@id": "foaf:weblog",
+      "@type": "@id"
+    },
+    "depicts": {
+      "@id": "foaf:depicts",
+      "@type": "@id"
+    },
+    "pastProject": {
+      "@id": "foaf:pastProject",
+      "@type": "@id"
+    },
+    "family_name": {
+      "@id": "foaf:family_name"
+    },
+    "skypeID": {
+      "@id": "foaf:skypeID"
+    },
+    "plan": {
+      "@id": "foaf:plan"
+    },
+    "maker": {
+      "@id": "foaf:maker",
+      "@type": "@id"
+    },
+    "title": {
+      "@id": "dc11:title"
+    },
+    "familyName": {
+      "@id": "foaf:familyName"
+    },
+    "membershipClass": {
+      "@id": "foaf:membershipClass"
+    },
+    "src_assurance": {
+      "@id": "wot:src_assurance"
+    },
+    "firstName": {
+      "@id": "foaf:firstName"
+    },
+    "givenname": {
+      "@id": "foaf:givenname"
+    },
+    "tipjar": {
+      "@id": "foaf:tipjar",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "foaf:status"
+    },
+    "focus": {
+      "@id": "foaf:focus",
+      "@type": "@id"
+    },
+    "account": {
+      "@id": "foaf:account",
+      "@type": "@id"
+    },
+    "topic": {
+      "@id": "foaf:topic",
+      "@type": "@id"
+    },
+    "isPrimaryTopicOf": {
+      "@id": "foaf:isPrimaryTopicOf"
+    },
+    "jabberID": {
+      "@id": "foaf:jabberID"
+    },
+    "openid": {
+      "@id": "foaf:openid",
+      "@type": "@id"
+    },
+    "myersBriggs": {
+      "@id": "foaf:myersBriggs"
+    },
+    "title0": {
+      "@id": "foaf:title0"
+    },
+    "msnChatID": {
+      "@id": "foaf:msnChatID"
+    },
+    "depiction": {
+      "@id": "foaf:depiction",
+      "@type": "@id"
+    },
+    "Agent": "foaf:Agent",
+    "OnlineGamingAccount": "foaf:OnlineGamingAccount",
+    "OnlineEcommerceAccount": "foaf:OnlineEcommerceAccount",
+    "Class": "rdfs:Class",
+    "PersonalProfileDocument": "foaf:PersonalProfileDocument",
+    "Project": "foaf:Project",
+    "SpatialThing": "geo:SpatialThing",
+    "Person": "foaf:Person",
+    "Document": "foaf:Document",
+    "Organization": "foaf:Organization",
+    "LabelProperty": "foaf:LabelProperty",
+    "OnlineChatAccount": "foaf:OnlineChatAccount",
+    "OnlineAccount": "foaf:OnlineAccount",
+    "Image": "foaf:Image",
+    "Group": "foaf:Group",
+    "type": "rdf:type"
+  },
+  "@id": "http://xmlns.com/foaf/0.1/",
+  "@type": "owl:Ontology",
+  "description": "The Friend of a Friend (FOAF) RDF vocabulary, described using W3C RDF Schema and the Web Ontology Language.",
+  "title": "Friend of a Friend (FOAF) vocabulary",
+  "type": {
+    "@id": "http://www.w3.org/2002/07/owl#Ontology",
+    "@type": "@id"
+  }
+}
