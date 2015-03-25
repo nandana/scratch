@@ -1,0 +1,7 @@
+https://wiki.jenkins-ci.org/display/JENKINS/Action+and+its+family+of+subtypes
+
+http://blog.cloudbees.com/2011/08/jenkins-internal-action-and-its.html
+https://dev.c-ware.de/confluence/display/PUBLIC/Developing+a+Jenkins+Plugin+for+the+Maven+Release+Plugin
+https://wiki.jenkins-ci.org/display/JENKINS/Basic+guide+to+Jelly+usage+in+Jenkins
+https://github.com/jenkinsci/emma-plugin
+https://github.com/jenkinsci/rebuild-plugin/

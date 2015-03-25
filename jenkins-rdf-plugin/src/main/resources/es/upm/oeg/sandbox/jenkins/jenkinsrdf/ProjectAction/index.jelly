@@ -1,0 +1,4 @@
+<j:jelly xmlns:st="jelly:stapler" xmlns:j="jelly:core">
+  <st:contentType value="text/turtle" />
+${it.turtle}
+</j:jelly>
